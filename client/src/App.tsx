@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import Registro from "./pages/Registro";
 import Produtos from "./pages/Produtos";
 import Favoritos from "./pages/Favoritos";
+import Carrinho from "./pages/Carrinho";
 import GerenciarCategorias from "./pages/GerenciarCategorias";
 import GerenciarProdutos from "./pages/GerenciarProdutos";
 
@@ -38,6 +39,7 @@ function App() {
             <Route path="/registro" element={<Registro />} />
             <Route path="/produtos" element={<Produtos />} />
             <Route path="/favoritos" element={<Favoritos />} />
+            <Route path="/carrinho" element={<Carrinho />} />
             <Route path="/admin/categorias" element={<GerenciarCategorias />} />
             <Route path="/admin/produtos" element={<GerenciarProdutos />} />
           </Routes>

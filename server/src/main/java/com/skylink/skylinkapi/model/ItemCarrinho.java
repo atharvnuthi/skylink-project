@@ -1,5 +1,6 @@
 package com.skylink.skylinkapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
@@ -12,6 +13,7 @@ public class ItemCarrinho {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @JsonBackReference
     private Usuario usuario;
 
     @ManyToOne

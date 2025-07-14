@@ -13,7 +13,8 @@ import java.util.Optional;
 
 @Repository
 public interface ItemCarrinhoRepository extends JpaRepository<ItemCarrinho, Long> {
-    List<ItemCarrinho> findByUsuario(Usuario usuario);
+    @Query("SELECT i FROM ItemCarrinho i JOIN FETCH i.produto p JOIN FETCH p.categoria WHERE i.usuario = :usuario")
+    List<ItemCarrinho> findByUsuario(@Param("usuario") Usuario usuario);
 
     Optional<ItemCarrinho> findByUsuarioAndProduto(Usuario usuario, Produto produto);
 

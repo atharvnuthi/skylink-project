@@ -6,7 +6,8 @@ import {
   useInfiniteQuery,
 } from "@tanstack/react-query";
 
-const API_BASE_URL = "http://localhost:8080/api";
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -228,7 +229,7 @@ export const useCarrinho = (usuarioId: number) => {
       const response = await api.get(`/carrinho/usuario/${usuarioId}`);
       return response.data as ItemCarrinho[];
     },
-    enabled: !!usuarioId,
+    enabled: !!usuarioId && usuarioId > 0,
   });
 };
 
@@ -247,6 +248,27 @@ export const useAdicionarAoCarrinho = () => {
       queryClient.invalidateQueries({
         queryKey: ["carrinho", variables.usuarioId],
       });
+    },
+  });
+};
+
+export const useAtualizarQuantidadeCarrinho = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      itemId,
+      quantidade,
+    }: {
+      itemId: number;
+      quantidade: number;
+    }) => {
+      const response = await api.put(`/carrinho/atualizar/${itemId}`, {
+        quantidade,
+      });
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["carrinho"] });
     },
   });
 };

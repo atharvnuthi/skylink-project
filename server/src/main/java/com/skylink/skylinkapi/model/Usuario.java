@@ -1,5 +1,6 @@
 package com.skylink.skylinkapi.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.Set;
 
@@ -20,6 +21,7 @@ public class Usuario {
     private String nome;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private Set<ItemCarrinho> itensCarrinho;
 
     @ManyToMany

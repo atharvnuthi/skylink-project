@@ -7,6 +7,8 @@ const Contact: React.FC = () => {
     message: "",
   });
 
+  const googleMapsApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
   useEffect(() => {
     document.title = "SkyLink - Contato";
   }, []);
@@ -112,7 +114,7 @@ const Contact: React.FC = () => {
           >
             <iframe
               title="Mapa"
-              src="https://www.google.com/maps/embed/v1/place?q=SkyLink+Headquarters&key=AIzaSyAOVYRIgupAurZup5y1PRh8Ismb1A3lLao"
+              src={`https://www.google.com/maps/embed/v1/place?q=SkyLink+Headquarters&key=${googleMapsApiKey}`}
               width="100%"
               height="100%"
               style={{ border: 0 }}

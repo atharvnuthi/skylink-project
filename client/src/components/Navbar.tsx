@@ -1,9 +1,15 @@
 import { NavLink, Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import Carrinho from "./Carrinho";
+import { useCarrinho } from "../hooks/useAPI";
 
 const Navbar: React.FC = () => {
   const { user, logout, isAuthenticated } = useAuth();
+  const { data: itensCarrinho = [] } = useCarrinho(user?.id || 0);
+
+  // Calculate total quantity for cart badge
+  const quantidadeTotal = itensCarrinho
+    .filter((item) => item.produto)
+    .reduce((acc, item) => acc + item.quantidade, 0);
 
   const handleLogout = () => {
     logout();
@@ -117,7 +123,18 @@ const Navbar: React.FC = () => {
           <div className="d-flex align-items-center gap-3">
             {isAuthenticated ? (
               <>
-                <Carrinho />
+                <Link
+                  to="/carrinho"
+                  className="btn btn-outline-light position-relative"
+                  title="Meu Carrinho"
+                >
+                  <i className="bi bi-cart3"></i>
+                  {quantidadeTotal > 0 && (
+                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      {quantidadeTotal}
+                    </span>
+                  )}
+                </Link>
                 <div className="dropdown">
                   <button
                     className="btn btn-outline-light dropdown-toggle"
@@ -128,6 +145,12 @@ const Navbar: React.FC = () => {
                     {user?.nome}
                   </button>
                   <ul className="dropdown-menu">
+                    <li>
+                      <Link className="dropdown-item" to="/carrinho">
+                        <i className="bi bi-cart3 me-2"></i>
+                        Meu Carrinho
+                      </Link>
+                    </li>
                     <li>
                       <Link className="dropdown-item" to="/favoritos">
                         <i className="bi bi-heart me-2"></i>
